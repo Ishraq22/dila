@@ -1,0 +1,273 @@
+<mat-progress-spinner class="example-margin" *ngIf="loading" [color]="color" [mode]="mode" [value]="value">
+</mat-progress-spinner>
+<div class="spinner-background" *ngIf="loading"></div>
+
+<div class="row">
+  <div class="col-md-12">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#/properties">Properties</a>
+        </li>
+        <li class="breadcrumb-item active" *ngIf="show == true && nav == 'add'" aria-current="page">
+          Add
+        </li>
+        <li class="breadcrumb-item active" *ngIf="show == true && nav == 'list'" aria-current="page">
+          List
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="card card-nav-tabs">
+      <!-- <div class="card-header card-header-danger">
+        Properties
+      </div> -->
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" (click)="changeNav('add')">Add</li>
+        <li class="list-group-item" (click)="changeNav('list')">List</li>
+      </ul>
+    </div>
+  </div>
+  <div class=" col-md-9">
+    <div class="card card-nav-tabs" *ngIf="show == true && nav == 'add'">
+      <div class="card-header card-header-warning">
+        <h4 class="card-title">Add New Property</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="propertyForm">
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <label>Address</label>
+                <input type="text" class="form-control" placeholder="Address" value="" formControlName="address" />
+              </div>
+            </div>
+            <div class="col-md-3 px-1">
+              <div class="form-group">
+                <label>Apt No. (Optional)</label>
+                <input type="text" class="form-control" placeholder="Apt No." value="" formControlName="apt_no" />
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label for="exampleInputEmail1">City</label>
+                <input type="text" class="form-control" placeholder="City" formControlName="city" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 pr-1">
+              <div class="form-group">
+                <label>Postal Code</label>
+                <input type="text" class="form-control" placeholder="Postal Code" value=""
+                  formControlName="postal_code" />
+              </div>
+            </div>
+            <div class="col-md-5 px-1">
+              <div class="form-group">
+                <label>Province</label>
+                <input type="text" class="form-control" placeholder="Province" value="" formControlName="province" />
+                <!-- <select class="form-control" style="height: auto; !important">
+                  <option
+                    *ngFor="let province of Provinces"
+                    value="{{ province }}"
+                  >
+                    {{ province }}
+                  </option>
+                </select> -->
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label>Country</label>
+                <input type="text" disabled class="form-control" placeholder="Country" value="Canada"
+                  formControlName="country" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Type</label>
+                <input type="text" class="form-control" placeholder="Type" value="" formControlName="type" disabled />
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Size</label>
+                <input type="text" class="form-control" placeholder="Size" value="" formControlName="size" disabled />
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label>MLS Number</label>
+                <input type="text" class="form-control" placeholder="MLS Number" formControlName="mls_number" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round" (click)="addProperty(propertyForm.value)">
+                Create
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- -------------------------------------------------------------------------- -->
+    <div class="card card-nav-tabs" *ngIf="show == true && nav == 'list'">
+      <div class="card-header card-header-warning">
+        <h4 class="card-title">Properties</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th>
+                  Address
+                </th>
+                <th>
+                  City
+                </th>
+                <th>
+                  Postal Code
+                </th>
+                <th class="text-right">
+                  MLS Number
+                </th>
+                <th>
+
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of property let i = index">
+                <td>
+                  {{ item.property_address }}
+                </td>
+                <td>
+                  {{ item.city  }}
+                </td>
+                <td>
+                  {{ item.postal_code }}
+                </td>
+                <td class="text-right">
+                  {{ item.mls_number }}
+                </td>
+                <td class="text-right"><button type="button" class="btn btn-info"
+                    (click)="open(content, item)">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+<!-- --------------------------------------------- -->
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Property Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- <div class="row">
+      <div class="col-md-6 pr-1">
+        <h6>Address: {{ proper.property_address }}</h6>
+      </div>
+      <div class="col-md-6 pr-1">
+        <h6>Apt No:</h6>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 pr-1">
+        <h6>City: </h6>
+      </div>
+      <div class="col-md-6 pr-1">
+        <h6>Postal Code:</h6>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 pr-1">
+        <h6>Province: </h6>
+      </div>
+      <div class="col-md-6 pr-1">
+        <h6>MLS Number:</h6>
+      </div>
+    </div> -->
+
+
+    <form [formGroup]="editProfileForm">
+      <div class="row">
+        <label for="firstname" class="col-sm-4 col-form-label">Address</label>
+        <div class="col-sm-8">
+          <input disabled type="text" class="form-control" formControlName="property_address" id="property_address">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="firstname" class="col-sm-4 col-form-label">Apt No</label>
+        <div class="col-sm-8">
+          <input disabled type="text" class="form-control" formControlName="apt_no" id="apt_no">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="firstname" class="col-sm-4 col-form-label">City</label>
+        <div class="col-sm-8">
+          <input disabled type="text" class="form-control" formControlName="city" id="city">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="firstname" class="col-sm-4 col-form-label">Postal Code</label>
+        <div class="col-sm-8">
+          <input disabled type="text" class="form-control" formControlName="postal_code" id="postal_code">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="firstname" class="col-sm-4 col-form-label">Province</label>
+        <div class="col-sm-8">
+          <input disabled type="text" class="form-control" formControlName="province" id="province">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="firstname" class="col-sm-4 col-form-label">MLS Number</label>
+        <div class="col-sm-8">
+          <input disabled type="text" class="form-control" formControlName="mls_number" id="mls_number">
+        </div>
+      </div>
+
+    </form>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>

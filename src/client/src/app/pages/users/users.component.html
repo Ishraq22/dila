@@ -1,0 +1,77 @@
+<mat-progress-spinner class="example-margin" *ngIf="loading" [color]="color" [mode]="mode" [value]="value">
+</mat-progress-spinner>
+<div class="spinner-background" *ngIf="loading"></div>
+
+
+
+<div class="card card-nav-tabs">
+    <div class="card-header card-header-warning">
+        <h4 class="card-title">Accounts</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+                    <tr>
+                        <th>
+                            Wallet ID
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of allAccounts[0] let i = index">
+                        <td>
+                            {{ item }}
+                        </td>
+                        <td class="text-right"><button type="button" class="btn btn-info"
+                                (click)="open(content, item)">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- --------------------------------------------- -->
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Account Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+                    <tr>
+                        <th>
+                            Properties
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of property let i = index">
+                        <td>
+                            {{ item.property_address }}
+                        </td>
+                        <td class="text-right"><button disabled type="button" class="btn btn-info"
+                                (click)="open(content, item)">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>

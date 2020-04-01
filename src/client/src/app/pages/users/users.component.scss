@@ -1,0 +1,34 @@
+.card .card-header .card-title {
+  margin-top: 0px;
+}
+
+li {
+  cursor: pointer;
+}
+
+
+mat-progress-spinner{
+  position: fixed;
+  z-index: 999;
+  height: 100px;
+  width: 100px;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+  
+
+
+.spinner-background{
+  position: fixed;
+  z-index: 990;
+  height: 1000px;
+  width: 100%;
+  background: #e9e9e9;
+  opacity: 0.5;
+  margin-top: -100px;
+}
+  
